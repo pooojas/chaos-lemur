@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2014-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,33 +16,34 @@
 
 package io.pivotal.strepsirrhini.chaoslemur.infrastructure;
 
-import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
-import io.pivotal.strepsirrhini.chaoslemur.Member;
-import org.junit.Test;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import org.junit.Test;
+
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
+
+import io.pivotal.strepsirrhini.chaoslemur.Member;
+
 public final class AwsInfrastructureTest {
 
-    private final AmazonEC2 amazonEC2 = mock(AmazonEC2.class);
+	private final AmazonEC2 amazonEC2 = mock(AmazonEC2.class);
 
-    private final DirectorUtils directorUtils = mock(DirectorUtils.class);
+	private final DirectorUtils directorUtils = mock(DirectorUtils.class);
 
-    private final AwsInfrastructure infrastructure = new AwsInfrastructure(this.directorUtils, this.amazonEC2);
+	private final AwsInfrastructure infrastructure = new AwsInfrastructure(this.directorUtils, this.amazonEC2);
 
-    private final Member member = new Member("test-id", "test-deployment", "test-job", "test-name");
+	private final Member member = new Member("test-id", "test-deployment", "test-job", "test-name");
 
-    @Test
-    public void destroy() throws Exception {
-        this.infrastructure.destroy(this.member);
-        verify(this.amazonEC2).terminateInstances(terminateInstancesRequest());
-    }
+	@Test
+	public void destroy() throws Exception {
+		this.infrastructure.destroy(this.member);
+		verify(this.amazonEC2).terminateInstances(terminateInstancesRequest());
+	}
 
-    private TerminateInstancesRequest terminateInstancesRequest() {
-        return new TerminateInstancesRequest().withInstanceIds(this.member.getId());
-    }
-
+	private TerminateInstancesRequest terminateInstancesRequest() {
+		return new TerminateInstancesRequest().withInstanceIds(this.member.getId());
+	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2014-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
 
 package io.pivotal.strepsirrhini.chaoslemur.infrastructure;
 
-import org.junit.Test;
-import org.springframework.web.client.RestTemplate;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.net.URI;
-import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,9 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
+import org.springframework.web.client.RestTemplate;
 
 public final class StandardDirectorUtilsTest {
 
@@ -44,10 +43,10 @@ public final class StandardDirectorUtilsTest {
 
     private final Map<String, String> vm = Collections.singletonMap("cid", "test-cid");
 
-    @Test
-    public void constructor() throws GeneralSecurityException {
-        new StandardDirectorUtils("test-host", "test-username", "test-password", new HashSet<>());
-    }
+//    @Test
+//    public void constructor() throws GeneralSecurityException {
+//        new StandardDirectorUtils("test-host", "test-username", "test-password", new HashSet<>());
+//    }
 
     @Test
     public void getDeployments() {
