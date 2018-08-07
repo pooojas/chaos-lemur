@@ -102,6 +102,7 @@ final class StandardDirectorUtils implements DirectorUtils {
     private static RestTemplate createRestTemplate(String host, String username, String password, Set<ClientHttpRequestInterceptor> interceptors) throws GeneralSecurityException {
         
     	String directorUaaBearerToken = getBoshDirectorUaaToken(host,username,password);
+    	log.info("directorUaaBearerToken:" + directorUaaBearerToken);
     	
 		SSLContext sslContext = SSLContexts.custom()
 	            .loadTrustMaterial(null, new TrustSelfSignedStrategy())
@@ -148,6 +149,7 @@ final class StandardDirectorUtils implements DirectorUtils {
             
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
             String base64Passowrd = encodePassword(directorName,password);
+            log.info("base64Passowrd:" + base64Passowrd);
             headers.add("Authorization", "Basic " + base64Passowrd);
             headers.add("Content-Type", "application/x-www-form-urlencoded");
 
@@ -155,6 +157,7 @@ final class StandardDirectorUtils implements DirectorUtils {
             
             HttpEntity<String> requestEntity = new HttpEntity<String>(postArgs,headers);
             String uri = "https://" + host + ":8443/oauth/token";
+            log.info("uri for auth token:" + uri);
             UaaToken response = restTemplate.postForObject(uri, requestEntity, UaaToken.class);
 
             log.info("Uaa token:" + response);
