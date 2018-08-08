@@ -137,13 +137,13 @@ final class Destroyer {
             .map(member -> this.executorService.submit(() -> {
                 if (this.fateEngine.shouldDie(member)) {
                     try {
-                        this.logger.info("{} Destroying: {}", identifier, member);
+                        this.logger.info("{} Destroying: {}", identifier, member.toString());
 
                         if (this.dryRun) {
-                            this.logger.info("{} Destroyed (Dry Run): {}", identifier, member.toString());
+                            this.logger.info("{} Destroyed (Dry Run): {}", identifier, member);
                         } else {
                             this.infrastructure.destroy(member);
-                            this.logger.info("{} Destroyed: {}", identifier, member.toString());
+                            this.logger.info("{} Destroyed: {}", identifier, member);
                         }
 
                         destroyedMembers.add(member);

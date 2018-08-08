@@ -47,7 +47,7 @@ final class VSphereInfrastructure extends AbstractDirectorUtilsInfrastructure {
                 .searchManagedEntity("VirtualMachine", member.getId());
 
             Assert.notNull(virtualMachine, String.format("virtualMachine must not be null for %s", member));
-            log.info("Power of VM in vsphere  with machine-id:" +member.getId());
+            log.info("Power off VM in vsphere  with machine-id:" +member.toString());
             handleTask(virtualMachine.powerOffVM_Task());
         } catch (InterruptedException | IOException e) {
             throw new DestructionException(String.format("Unable to destroy %s", member), e);
