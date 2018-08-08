@@ -131,19 +131,19 @@ final class Destroyer {
 
         this.logger.info("{} Beginning run...", identifier);
         this.logger.info("VM count:{}",  this.infrastructure.getMembers().stream().count());
-        this.infrastructure.getMembers().stream().forEach(
-                element -> logger.info("vm-id:{} marked for destroy",element));
+        /*this.infrastructure.getMembers().stream().forEach(
+                element -> logger.info("vm-id:{} marked for destroy",element));*/
         this.infrastructure.getMembers().stream()
             .map(member -> this.executorService.submit(() -> {
                 if (this.fateEngine.shouldDie(member)) {
                     try {
-                        this.logger.debug("{} Destroying: {}", identifier, member);
+                        this.logger.info("{} Destroying: {}", identifier, member);
 
                         if (this.dryRun) {
-                            this.logger.info("{} Destroyed (Dry Run): {}", identifier, member);
+                            this.logger.info("{} Destroyed (Dry Run): {}", identifier, member.toString());
                         } else {
                             this.infrastructure.destroy(member);
-                            this.logger.info("{} Destroyed: {}", identifier, member);
+                            this.logger.info("{} Destroyed: {}", identifier, member.toString());
                         }
 
                         destroyedMembers.add(member);
