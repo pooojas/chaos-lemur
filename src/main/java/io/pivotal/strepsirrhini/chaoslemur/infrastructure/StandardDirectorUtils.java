@@ -150,7 +150,7 @@ final class StandardDirectorUtils implements DirectorUtils {
             MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
             String base64Passowrd = encodePassword(directorName,password);
             log.info("base64Passowrd:" + base64Passowrd);
-            headers.add("Authorization", "Basic" + base64Passowrd);
+            headers.add("Authorization", "Basic " + base64Passowrd);
             headers.add("Content-Type", "application/x-www-form-urlencoded");
 
             String postArgs = "grant_type=client_credentials";
