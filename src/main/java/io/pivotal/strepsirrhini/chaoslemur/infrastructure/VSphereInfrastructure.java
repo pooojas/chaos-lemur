@@ -21,6 +21,9 @@ import com.vmware.vim25.TaskInfoState;
 import com.vmware.vim25.mo.Task;
 import com.vmware.vim25.mo.VirtualMachine;
 import io.pivotal.strepsirrhini.chaoslemur.Member;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -29,6 +32,8 @@ import java.rmi.RemoteException;
 final class VSphereInfrastructure extends AbstractDirectorUtilsInfrastructure {
 
     private final InventoryNavigatorFactory inventoryNavigatorFactory;
+    
+    private static final Logger log = LoggerFactory.getLogger(VSphereInfrastructure.class);
 
     VSphereInfrastructure(DirectorUtils directorUtils, InventoryNavigatorFactory inventoryNavigatorFactory) {
         super(directorUtils);
@@ -42,7 +47,7 @@ final class VSphereInfrastructure extends AbstractDirectorUtilsInfrastructure {
                 .searchManagedEntity("VirtualMachine", member.getId());
 
             Assert.notNull(virtualMachine, String.format("virtualMachine must not be null for %s", member));
-
+            log.info("Power of VM in vsphere  with machine-id:" +member.getId());
             handleTask(virtualMachine.powerOffVM_Task());
         } catch (InterruptedException | IOException e) {
             throw new DestructionException(String.format("Unable to destroy %s", member), e);
