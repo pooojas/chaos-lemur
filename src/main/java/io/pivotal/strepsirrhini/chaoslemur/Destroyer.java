@@ -130,7 +130,9 @@ final class Destroyer {
         UUID identifier = UUID.randomUUID();
 
         this.logger.info("{} Beginning run...", identifier);
-
+        this.logger.info("VM count:{}",  this.infrastructure.getMembers().stream().count());
+        this.infrastructure.getMembers().stream().forEach(
+                element -> logger.info("vm-id:{} marked for destroy",element));
         this.infrastructure.getMembers().stream()
             .map(member -> this.executorService.submit(() -> {
                 if (this.fateEngine.shouldDie(member)) {
