@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 
 public final class StandardDirectorUtilsTest {
@@ -38,8 +39,14 @@ public final class StandardDirectorUtilsTest {
     private final RestTemplate restTemplate = mock(RestTemplate.class);
 
     private final URI root = URI.create("http://localhost");
+    
+    private String host ="host";
+	private String username ="user'";
+	private String password ="password";
+	
+	
 
-    private final StandardDirectorUtils directorUtils = new StandardDirectorUtils(this.restTemplate, this.root);
+    private final StandardDirectorUtils directorUtils = new StandardDirectorUtils(this.restTemplate, this.root,host,username,password,null);
 
     private final Map<String, String> vm = Collections.singletonMap("cid", "test-cid");
 
