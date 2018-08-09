@@ -44,11 +44,9 @@ public final class StandardDirectorUtilsTest {
 	private String username ="user'";
 	private String password ="password";
 	
-	
 
     private final StandardDirectorUtils directorUtils = new StandardDirectorUtils(this.restTemplate, this.root,host,username,password,null);
-
-    private final Map<String, String> vm = Collections.singletonMap("cid", "test-cid");
+    	private final Map<String, String> vm = Collections.singletonMap("cid", "test-cid");
 
 //    @Test
 //    public void constructor() throws GeneralSecurityException {
@@ -66,7 +64,9 @@ public final class StandardDirectorUtilsTest {
         assertEquals(expected, this.directorUtils.getDeployments());
     }
 
-    @Test
+  
+
+	@Test
     public void getVirtualMachines() {
         Set<Map<String, String>> expected = new HashSet<>();
         expected.add(this.vm);

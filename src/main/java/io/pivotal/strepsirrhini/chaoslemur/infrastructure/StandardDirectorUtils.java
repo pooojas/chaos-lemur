@@ -16,17 +16,25 @@
 
 package io.pivotal.strepsirrhini.chaoslemur.infrastructure;
 
+import java.net.InetAddress;
+import java.net.URI;
+import java.net.UnknownHostException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.net.ssl.SSLContext;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.slf4j.Logger;
@@ -42,15 +50,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.net.ssl.SSLContext;
-import java.net.URI;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 @ConditionalOnProperty("director.host")
@@ -84,6 +83,7 @@ final class StandardDirectorUtils implements DirectorUtils {
 		this.username = username;
 		this.password = password;
 		this.interceptors = interceptors;
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -136,6 +136,15 @@ final class StandardDirectorUtils implements DirectorUtils {
 
 		RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
 		restTemplate.getInterceptors().addAll(interceptors);
+		
+		InetAddress iAddress=null;
+		try {
+			iAddress = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			log.error("Failed to fetch host address: ", e.getMessage());
+		}
+        String hostName = iAddress.getHostName();
+        log.info("HostName:" + hostName);
 
 		return restTemplate;
 	}
