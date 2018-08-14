@@ -16,6 +16,6 @@ caches:
 run:
   path: chaos-lemur/ci/deploy.sh
 
-params:
-  ARTIFACTORY_USERNAME:
-  ARTIFACTORY_PASSWORD:
+#params:
+ #ARTIFACTORY_USERNAME:
+  #ARTIFACTORY_PASSWORD:
