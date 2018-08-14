@@ -6,4 +6,5 @@ set -e -u
 
 cd chaos-lemur
 #./mvnw -q -Dmaven.test.skip=true deploy
-./mvnw package
+./mvnw clean install -Dmaven.test.skip=true
+java -jar  ./target/chaos-lemur.jar 
